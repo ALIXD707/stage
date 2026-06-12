@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المرحلة 1 — HTML + CSS فقط</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+
+  
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  
+  :root {
+    --bg:         #f4f6f9;
+    --white:      #ffffff;
+    --border:     #e2e8f0;
+    --border2:    #cbd5e1;
+    --accent:     #1d4ed8;
+    --accent-lt:  #eff6ff;
+    --green:      #059669;
+    --green-lt:   #ecfdf5;
+    --amber:      #d97706;
+    --amber-lt:   #fffbeb;
+    --red:        #dc2626;
+    --red-lt:     #fef2f2;
+    --text:       #0f172a;
+    --text2:      #475569;
+    --text3:      #94a3b8;
+    --shadow:     0 1px 3px rgba(0,0,0,0.08);
+    --radius:     10px;
+    --radius-sm:  6px;
+  }
+
+  
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+
+  header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    box-shadow: var(--shadow);
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-logo {
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+  }
+
+  .header-title {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .header-sub {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .header-badge {
+    background: var(--accent-lt);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid #bfdbfe;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text3);
+    font-weight: 600;
+  }
+
+  
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-lt);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .icon { font-size: 16px; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .grid-full {
+    grid-column: 1 / -1;
+  }
+
+  
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: 7px;
+  }
+
+  input[type="text"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--white);
+    direction: rtl;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text3);
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    padding-left: 36px;
+  }
+
+  textarea {
+    resize: vertical;
+    line-height: 1.6;
+    min-height: 90px;
+  }
+
+  .toggle-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .toggle-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border2);
+    background: var(--white);
+    color: var(--text2);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  } 
+
+  .toggle-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-lt);
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-primary:hover { background: #1e40af; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    background: transparent;
+    color: var(--text2);
+    border: 1.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-lt);
+  }
+
+  .btn-export {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--green-lt);
+    color: var(--green);
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius-sm);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text3);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-text { font-size: 15px; font-weight: 600; }
+  .empty-sub  { font-size: 13px; margin-top: 4px; }
+
+  .no-js-note {
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #92400e;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+ 
+  @media (max-width: 640px) {
+    .grid-2    { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    header     { padding: 0 16px; }
+    .page      { padding: 16px; }
+    .card      { padding: 18px; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="header-logo">📋</div>
+    <div>
+      <div class="header-title">منظومة المراسلات</div>
+      <div class="header-sub">الأكاديمية الجهوية للتربية والتكوين</div>
+    </div>
+  </div>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <span class="header-badge">المراسلات: 0</span>
+    <button class="btn-export">⬇️ تصدير CSV</button>
+  </div>
+</header>
+
+
+<div class="page">
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--accent)">0</div>
+      <div class="stat-label">إجمالي المراسلات</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--green)">0</div>
+      <div class="stat-label">صادرات</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--amber)">0</div>
+      <div class="stat-label">واردات</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--red)">0</div>
+      <div class="stat-label">مستعجلة</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">
+      <span class="icon">✍️</span> إضافة مراسلة جديدة
+    </div>
+
+    <div class="grid-2">
+
+      <div>
+        <label>الجهة المستقبلة</label>
+        <select>
+          <option value="">— اختر الجهة —</option>
+          <option>المديريات الاقليمية</option>
+          <option>الاكاديمية</option>
+          <option>مصالح داخلية</option>
+          <option>الوزارة</option>
+          <option>مديرية منظومة الاعلام الوزارة</option>
+          <option>✏️ أخرى (اكتب)</option>
+        </select>
+      </div>
+
+      <div>
+        <label>الجهة المرسلة</label>
+        <select>
+          <option value="">— اختر الجهة —</option>
+          <option>الاكاديمية</option>
+          <option>الوزارة</option>
+          <option>مديرية مشروع "جيني"</option>
+          <option>✏️ أخرى (اكتب)</option>
+        </select>
+      </div>
+
+      <div>
+        <label>النوع</label>
+        <div class="toggle-group">
+          <button class="toggle-btn">مراسلة</button>
+          <button class="toggle-btn">إرسالية</button>
+        </div>
+      </div>
+
+      <div>
+        <label>الصادر / الوارد</label>
+        <div class="toggle-group">
+          <button class="toggle-btn">📤 صادرات</button>
+          <button class="toggle-btn">📥 واردات</button>
+        </div>
+      </div>
+
+      <div>
+        <label>عنوان الملف</label>
+        <select>
+          <option value="">— اختر الملف —</option>
+          <option>genie</option>
+          <option>منظومة رائد</option>
+          <option>مسار</option>
+          <option>منظومة الاعلام</option>
+          <option>الاحصاء</option>
+          <option>pisa-pnea</option>
+          <option>cpge</option>
+          <option>تتبع الدخول المدرسي</option>
+          <option>مختلفات</option>
+          <option>✏️ أخرى (اكتب)</option>
+        </select>
+      </div>
+
+      <div>
+        <label>طريقة الإرسال</label>
+        <div class="toggle-group">
+          <button class="toggle-btn">📠 عادي / فاكس</button>
+          <button class="toggle-btn">📬 عادي</button>
+        </div>
+      </div>
+
+      <div class="grid-full">
+        <label>طبيعة المراسلة</label>
+        <div class="toggle-group">
+          <button class="toggle-btn">عادي</button>
+          <button class="toggle-btn">⚡ مستعجل</button>
+          <button class="toggle-btn">⚠️ هام جدا</button>
+          <button class="toggle-btn">🔴 هام جدا / مستعجل</button>
+        </div>
+      </div>
+
+      <div>
+        <label>الرقم المرجعي</label>
+        <input type="text" placeholder="مثال: 5795 أو 862/21">
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div>
+          <label>تاريخ الخروج</label>
+          <input type="text" placeholder="مثال: 15 يناير 2023">
+        </div>
+        <div>
+          <label>تاريخ الدخول</label>
+          <input type="text" placeholder="مثال: 20 يناير 2023">
+        </div>
+      </div>
+
+      <div class="grid-full">
+        <label>الموضوع</label>
+        <textarea placeholder="اكتب موضوع المراسلة بالتفصيل هنا..."></textarea>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary">➕ إضافة المراسلة</button>
+      <button class="btn-ghost">🔄 تفريغ النموذج</button>
+    </div>
+  </div>
+
+  <!-- منطقة المراسلات -->
+  <div class="section-title"><span class="icon">📂</span> المراسلات المضافة</div>
+  <div class="empty-state">
+    <div class="empty-icon">📭</div>
+    <div class="empty-text">لا توجد مراسلات بعد</div>
+    <div class="empty-sub">ستظهر المراسلات هنا بعد إضافة JavaScript في المرحلة الثانية</div>
+  </div>
+
+</div>
+
+</body>
+</html>
