@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المرحلة 3 — النتيجة النهائية ✅</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+     الخطوة الثالثة: النتيجة النهائية الكاملة
+     ✅ تصميم احترافي متطور
+     ✅ localStorage — تحفظ البيانات حتى بعد إغلاق المتصفح
+     ✅ بحث فوري داخل المراسلات
+     ✅ طباعة المراسلات
+     ✅ رسوم متحركة وتجربة مستخدم محسّنة
+     ✅ تصدير CSV
+     ============================================================ -->
+
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+  :root {
+    --bg:        #f0f4f8;
+    --white:     #ffffff;
+    --border:    #e2e8f0;
+    --border2:   #cbd5e1;
+    --accent:    #1d4ed8;
+    --accent-lt: #eff6ff;
+    --accent-dk: #1e40af;
+    --green:     #059669;
+    --green-lt:  #ecfdf5;
+    --amber:     #d97706;
+    --amber-lt:  #fffbeb;
+    --red:       #dc2626;
+    --red-lt:    #fef2f2;
+    --purple:    #7c3aed;
+    --purple-lt: #f5f3ff;
+    --text:      #0f172a;
+    --text2:     #475569;
+    --text3:     #94a3b8;
+    --shadow:    0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+    --radius:    12px;
+    --radius-sm: 8px;
+  }
+
+  body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; direction:rtl; }
+
+  /* ── شريط المرحلة ── */
+
+  /* ── الهيدر ── */
+  header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+    padding:0 40px; display:flex; align-items:center;
+    justify-content:space-between; height:72px;
+    box-shadow:0 4px 20px rgba(29,78,216,0.3);
+    position:sticky; top:0; z-index:100;
+  }
+  .header-brand { display:flex; align-items:center; gap:14px; }
+  .header-logo {
+    width:42px; height:42px;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.3);
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-size:20px; backdrop-filter:blur(4px);
+  }
+  .header-title { font-size:18px; font-weight:900; color:white; }
+  .header-sub   { font-size:12px; color:rgba(255,255,255,0.65); }
+  .header-right { display:flex; align-items:center; gap:10px; }
+  .header-badge {
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.3);
+    color:white; font-size:12px; font-weight:700;
+    padding:5px 14px; border-radius:20px; backdrop-filter:blur(4px);
+  }
+
+  /* ── أزرار الهيدر ── */
+  .btn-hdr {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 16px; border-radius:var(--radius-sm);
+    font-family:'Cairo',sans-serif; font-size:13px; font-weight:700;
+    cursor:pointer; transition:all 0.15s; border:none;
+  }
+  .btn-hdr-green { background:var(--green); color:white; }
+  .btn-hdr-green:hover { background:#047857; }
+  .btn-hdr-white { background:rgba(255,255,255,0.15); color:white; border:1px solid rgba(255,255,255,0.3); }
+  .btn-hdr-white:hover { background:rgba(255,255,255,0.25); }
+
+  /* ── الصفحة ── */
+  .page { max-width:940px; margin:0 auto; padding:32px 24px; }
+
+  /* ── إحصائيات ── */
+  .stats-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+  .stat-card {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:var(--radius); padding:18px 16px;
+    text-align:center; box-shadow:var(--shadow);
+    transition:transform 0.2s, box-shadow 0.2s;
+    position:relative; overflow:hidden;
+  }
+  .stat-card::before {
+    content:''; position:absolute; top:0; right:0; left:0;
+    height:3px; border-radius:var(--radius) var(--radius) 0 0;
+  }
+  .stat-card:nth-child(1)::before { background:var(--accent); }
+  .stat-card:nth-child(2)::before { background:var(--green); }
+  .stat-card:nth-child(3)::before { background:var(--amber); }
+  .stat-card:nth-child(4)::before { background:var(--red); }
+  .stat-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+  .stat-num   { font-size:32px; font-weight:900; line-height:1; margin-bottom:4px; transition:all 0.3s; }
+  .stat-label { font-size:12px; color:var(--text3); font-weight:600; }
+
+  /* ── بطاقة ── */
+  .card {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:var(--radius); padding:28px;
+    margin-bottom:20px; box-shadow:var(--shadow);
+    transition:box-shadow 0.2s;
+  }
+  .card:hover { box-shadow:var(--shadow-md); }
+
+  .section-title {
+    font-size:13px; font-weight:700; color:var(--accent);
+    margin-bottom:20px; padding-bottom:10px;
+    border-bottom:2px solid var(--accent-lt);
+    display:flex; align-items:center; gap:8px;
+  }
+
+  /* ── شبكة ── */
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .grid-full { grid-column:1/-1; }
+
+  /* ── حقول ── */
+  label { display:block; font-size:13px; font-weight:600; color:var(--text2); margin-bottom:7px; }
+
+  input[type="text"], textarea, select {
+    width:100%; padding:10px 14px;
+    border:1.5px solid var(--border2); border-radius:var(--radius-sm);
+    font-family:'Cairo',sans-serif; font-size:14px;
+    color:var(--text); background:var(--white); direction:rtl;
+    outline:none; appearance:none; -webkit-appearance:none;
+    transition:border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(29,78,216,0.12);
+    background:#fafcff;
+  }
+  input::placeholder, textarea::placeholder { color:var(--text3); }
+  select {
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:left 12px center; padding-left:36px;
+  }
+  textarea { resize:vertical; line-height:1.6; min-height:90px; }
+  .other-input { margin-top:8px; display:none; }
+
+  /* ── أزرار تبديل ── */
+  .toggle-group { display:flex; flex-wrap:wrap; gap:8px; }
+  .toggle-btn {
+    padding:8px 16px; border-radius:20px; border:1.5px solid var(--border2);
+    background:var(--white); color:var(--text2); font-family:'Cairo',sans-serif;
+    font-size:13px; font-weight:600; cursor:pointer; transition:all 0.18s; white-space:nowrap;
+  }
+  .toggle-btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-lt); transform:translateY(-1px); }
+  .toggle-btn.active       { background:var(--accent); color:white; border-color:var(--accent); box-shadow:0 2px 10px rgba(29,78,216,0.3); }
+  .toggle-btn.active-green { background:var(--green);  color:white; border-color:var(--green);  box-shadow:0 2px 10px rgba(5,150,105,0.3); }
+  .toggle-btn.active-amber { background:var(--amber);  color:white; border-color:var(--amber); }
+  .toggle-btn.active-red   { background:var(--red);    color:white; border-color:var(--red);   box-shadow:0 2px 10px rgba(220,38,38,0.3); }
+
+  /* ── إجراءات ── */
+  .form-actions { display:flex; gap:12px; align-items:center; margin-top:24px; padding-top:24px; border-top:1px solid var(--border); }
+  .btn-primary {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 28px; background:linear-gradient(135deg,var(--accent),var(--accent-dk));
+    color:white; border:none; border-radius:var(--radius-sm);
+    font-family:'Cairo',sans-serif; font-size:15px; font-weight:700;
+    cursor:pointer; transition:all 0.18s;
+    box-shadow:0 4px 12px rgba(29,78,216,0.3);
+  }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(29,78,216,0.4); }
+  .btn-primary:active { transform:translateY(0); }
+  .btn-ghost {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 20px; background:transparent; color:var(--text2);
+    border:1.5px solid var(--border2); border-radius:var(--radius-sm);
+    font-family:'Cairo',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.15s;
+  }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-lt); }
+
+  /* ── شريط بحث ── */
+  .search-bar {
+    display:flex; align-items:center; gap:10px;
+    background:var(--white); border:1.5px solid var(--border2);
+    border-radius:var(--radius-sm); padding:8px 14px;
+    margin-bottom:16px; transition:border-color 0.15s, box-shadow 0.15s;
+  }
+  .search-bar:focus-within { border-color:var(--accent); box-shadow:0 0 0 3px rgba(29,78,216,0.1); }
+  .search-bar input {
+    flex:1; border:none; padding:0; background:transparent;
+    font-size:14px; direction:rtl; box-shadow:none !important;
+  }
+  .search-bar input:focus { border:none; box-shadow:none; }
+  .search-icon { color:var(--text3); font-size:16px; flex-shrink:0; }
+
+  /* ── Toast ── */
+  .toast {
+    position:fixed; bottom:30px; left:50%;
+    transform:translateX(-50%) translateY(20px);
+    padding:12px 24px; border-radius:30px;
+    font-size:14px; font-weight:700; opacity:0;
+    transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    z-index:999; pointer-events:none; white-space:nowrap;
+    box-shadow:var(--shadow-lg);
+  }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+  .toast-success { background:#1e293b; color:white; }
+  .toast-error   { background:var(--red); color:white; }
+
+  /* ── بطاقات المراسلات ── */
+  .records-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:10px; }
+
+  .record-card {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:var(--radius); padding:16px 20px; margin-bottom:10px;
+    display:flex; gap:16px; align-items:flex-start;
+    box-shadow:var(--shadow); transition:all 0.2s;
+    animation:slideIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    border-right:4px solid transparent;
+  }
+  .record-card:hover { box-shadow:var(--shadow-md); transform:translateX(-2px); border-right-color:var(--accent); }
+  .record-card.urgent  { border-right-color:var(--red); }
+  .record-card.important { border-right-color:var(--amber); }
+
+  @keyframes slideIn {
+    from { opacity:0; transform:translateY(-12px) scale(0.98); }
+    to   { opacity:1; transform:translateY(0)     scale(1); }
+  }
+
+  .record-num {
+    min-width:42px; height:42px;
+    background:linear-gradient(135deg,var(--accent-lt),#dbeafe);
+    color:var(--accent); border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:900; flex-shrink:0;
+    border:1px solid #bfdbfe;
+  }
+  .record-body { flex:1; min-width:0; }
+  .record-subject { font-size:14px; font-weight:700; color:var(--text); margin-bottom:8px; line-height:1.6; }
+  .record-meta { display:flex; flex-wrap:wrap; gap:5px; }
+
+  .pill { display:inline-flex; align-items:center; gap:3px; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; white-space:nowrap; }
+  .pill-blue   { background:var(--accent-lt); color:var(--accent); border:1px solid #bfdbfe; }
+  .pill-green  { background:var(--green-lt);  color:var(--green);  border:1px solid #a7f3d0; }
+  .pill-amber  { background:var(--amber-lt);  color:var(--amber);  border:1px solid #fde68a; }
+  .pill-red    { background:var(--red-lt);    color:var(--red);    border:1px solid #fecaca; }
+  .pill-gray   { background:#f8fafc; color:var(--text2); border:1px solid var(--border); }
+  .pill-purple { background:var(--purple-lt); color:var(--purple); border:1px solid #ddd6fe; }
+
+  .record-actions { display:flex; gap:4px; flex-shrink:0; }
+  .action-btn {
+    width:32px; height:32px; border:none; cursor:pointer;
+    border-radius:6px; display:flex; align-items:center; justify-content:center;
+    font-size:14px; transition:all 0.15s; background:transparent; color:var(--text3);
+  }
+  .action-btn:hover.del   { background:var(--red-lt);    color:var(--red); }
+  .action-btn:hover.print { background:var(--accent-lt); color:var(--accent); }
+
+  /* ── حالة فارغة ── */
+  .empty-state { text-align:center; padding:60px 20px; color:var(--text3); background:var(--white); border:2px dashed var(--border2); border-radius:var(--radius); }
+  .empty-icon { font-size:52px; margin-bottom:14px; opacity:0.6; }
+  .empty-text { font-size:16px; font-weight:700; margin-bottom:4px; }
+  .empty-sub  { font-size:13px; }
+
+  /* ── حفظ تلقائي ── */
+  .autosave-note {
+    background:var(--green-lt); border:1px solid #a7f3d0;
+    border-radius:var(--radius-sm); padding:8px 16px;
+    font-size:12px; color:var(--green); margin-top:12px;
+    display:flex; align-items:center; gap:6px;
+  }
+
+  /* ── Responsive ── */
+  @media(max-width:640px) {
+    .grid-2{grid-template-columns:1fr} .stats-bar{grid-template-columns:1fr 1fr}
+    header{padding:0 16px} .page{padding:16px} .card{padding:18px}
+    .header-right .btn-hdr-white{display:none}
+  }
+
+  /* ── طباعة ── */
+  @media print {
+    .stage-banner, header, .card:first-of-type, .search-bar,
+    .records-header .btn-hdr-green, .action-btn { display:none !important; }
+    .record-card { box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+    body { background:white; }
+  }
+</style>
+</head>
+<body>
+
+
+<header>
+  <div class="header-brand">
+    <div class="header-logo">📋</div>
+    <div>
+      <div class="header-title">منظومة المراسلات</div>
+      <div class="header-sub">الأكاديمية الجهوية للتربية والتكوين</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="header-badge">المراسلات: <span id="hdr-count">0</span></span>
+    <button class="btn-hdr btn-hdr-green" onclick="exportCSV()">⬇️ تصدير CSV</button>
+    <button class="btn-hdr btn-hdr-white" onclick="window.print()">🖨️ طباعة</button>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- إحصائيات -->
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-num" id="s-total" style="color:var(--accent)">0</div><div class="stat-label">إجمالي المراسلات</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-out"   style="color:var(--green)">0</div><div class="stat-label">صادرات</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-in"    style="color:var(--amber)">0</div><div class="stat-label">واردات</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-urg"   style="color:var(--red)">0</div><div class="stat-label">مستعجلة</div></div>
+  </div>
+
+  <!-- النموذج -->
+  <div class="card">
+    <div class="section-title">✍️ إضافة مراسلة جديدة</div>
+
+    <div class="grid-2">
+      <div>
+        <label>الجهة المستقبلة</label>
+        <select id="mustaqbila" onchange="toggleOther('mustaqbila')">
+          <option value="">— اختر الجهة —</option>
+          <option>المديريات الاقليمية</option><option>الاكاديمية</option>
+          <option>مصالح داخلية</option><option>الوزارة</option>
+          <option>مديرية منظومة الاعلام الوزارة</option>
+          <option value="__other__">✏️ أخرى (اكتب)</option>
+        </select>
+        <input type="text" id="mustaqbila_other" class="other-input" placeholder="اكتب الجهة المستقبلة...">
+      </div>
+      <div>
+        <label>الجهة المرسلة</label>
+        <select id="mursila" onchange="toggleOther('mursila')">
+          <option value="">— اختر الجهة —</option>
+          <option>الاكاديمية</option><option>الوزارة</option>
+          <option>مديرية مشروع "جيني"</option>
+          <option value="__other__">✏️ أخرى (اكتب)</option>
+        </select>
+        <input type="text" id="mursila_other" class="other-input" placeholder="اكتب الجهة المرسلة...">
+      </div>
+      <div>
+        <label>النوع</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-field="naw" data-val="مراسلة" onclick="toggleBtn(this)">مراسلة</button>
+          <button class="toggle-btn" data-field="naw" data-val="ارسالية" onclick="toggleBtn(this)">إرسالية</button>
+        </div>
+      </div>
+      <div>
+        <label>الصادر / الوارد</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-field="sadarat" data-val="صادرات" data-color="green" onclick="toggleBtn(this)">📤 صادرات</button>
+          <button class="toggle-btn" data-field="sadarat" data-val="واردات" data-color="amber" onclick="toggleBtn(this)">📥 واردات</button>
+        </div>
+      </div>
+      <div>
+        <label>عنوان الملف</label>
+        <select id="file" onchange="toggleOther('file')">
+          <option value="">— اختر الملف —</option>
+          <option>genie</option><option>منظومة رائد</option><option>رائد</option>
+          <option>مسار</option><option>منظومة الاعلام</option><option>الاحصاء</option>
+          <option>pisa-pnea</option><option>cpge</option><option>تتبع الدخول المدرسي</option>
+          <option>مختلفات</option><option value="__other__">✏️ أخرى (اكتب)</option>
+        </select>
+        <input type="text" id="file_other" class="other-input" placeholder="اكتب عنوان الملف...">
+      </div>
+      <div>
+        <label>طريقة الإرسال</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-field="tariqa" data-val="عادي / فاكس" onclick="toggleBtn(this)">📠 عادي / فاكس</button>
+          <button class="toggle-btn" data-field="tariqa" data-val="عادي" onclick="toggleBtn(this)">📬 عادي</button>
+        </div>
+      </div>
+      <div class="grid-full">
+        <label>طبيعة المراسلة</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" data-field="tabia" data-val="عادي" onclick="toggleBtn(this)">عادي</button>
+          <button class="toggle-btn" data-field="tabia" data-val="مستعجل" data-color="red" onclick="toggleBtn(this)">⚡ مستعجل</button>
+          <button class="toggle-btn" data-field="tabia" data-val="هام جدا" data-color="amber" onclick="toggleBtn(this)">⚠️ هام جدا</button>
+          <button class="toggle-btn" data-field="tabia" data-val="هام جدا / مستعجل" data-color="red" onclick="toggleBtn(this)">🔴 هام جدا / مستعجل</button>
+        </div>
+      </div>
+      <div>
+        <label>الرقم المرجعي</label>
+        <input type="text" id="raqm" placeholder="مثال: 5795 أو 862/21">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div><label>تاريخ الخروج</label><input type="text" id="date_out" placeholder="15 يناير 2023"></div>
+        <div><label>تاريخ الدخول</label><input type="text" id="date_in"  placeholder="20 يناير 2023"></div>
+      </div>
+      <div class="grid-full">
+        <label>الموضوع</label>
+        <textarea id="mawdou" placeholder="اكتب موضوع المراسلة بالتفصيل هنا..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary" onclick="addRecord()">➕ إضافة المراسلة</button>
+      <button class="btn-ghost"   onclick="resetForm()">🔄 تفريغ النموذج</button>
+    </div>
+  </div>
+
+  <!-- قائمة المراسلات -->
+  <div class="records-header">
+    <div class="section-title" style="margin-bottom:0;border:none;">📂 المراسلات المضافة</div>
+    <button class="btn-hdr btn-hdr-green" onclick="exportCSV()" style="font-size:13px;padding:7px 14px;">⬇️ تصدير CSV</button>
+  </div>
+
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="ابحث في الموضوع أو الرقم..." oninput="renderRecords()">
+  </div>
+
+  <div id="records-wrap">
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <div class="empty-text">لا توجد مراسلات بعد</div>
+      <div class="empty-sub">أضف مراسلة أولى باستخدام النموذج أعلاه</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const state   = { naw:'', sadarat:'', tariqa:'', tabia:'' };
+  let   records = JSON.parse(localStorage.getItem('muraselat') || '[]');
+
+  function save() {
+    try { localStorage.setItem('muraselat', JSON.stringify(records)); } catch(e) {}
+  }
+
+  function toggleOther(id) {
+    const sel = document.getElementById(id);
+    const oth = document.getElementById(id + '_other');
+    if (oth) oth.style.display = sel.value === '__other__' ? 'block' : 'none';
+  }
+
+  function toggleBtn(btn) {
+    const field = btn.dataset.field;
+    const val   = btn.dataset.val;
+    const color = btn.dataset.color || 'blue';
+    document.querySelectorAll(`.toggle-btn[data-field="${field}"]`)
+      .forEach(b => b.classList.remove('active','active-green','active-amber','active-red'));
+    if (state[field] === val) {
+      state[field] = '';
+    } else {
+      state[field] = val;
+      btn.classList.add(color==='green'?'active-green':color==='amber'?'active-amber':color==='red'?'active-red':'active');
+    }
+  }
+
+  function getVal(id) {
+    const el = document.getElementById(id);
+    if (!el) return '';
+    if (el.tagName==='SELECT') {
+      if (el.value==='__other__') return document.getElementById(id+'_other')?.value?.trim()||'';
+      return el.value;
+    }
+    return el.value.trim();
+  }
+
+  function addRecord() {
+    const subject = document.getElementById('mawdou').value.trim();
+    const raqm    = getVal('raqm');
+    if (!subject && !raqm) {
+      const ta = document.getElementById('mawdou');
+      ta.style.borderColor='#dc2626'; ta.focus();
+      showToast('⚠️ يرجى كتابة الموضوع أو الرقم المرجعي','error');
+      setTimeout(()=>ta.style.borderColor='',1500);
+      return;
+    }
+    records.unshift({
+      id: Date.now(),
+      'الجهة المستقبلة': getVal('mustaqbila'),
+      'الجهة المرسلة':   getVal('mursila'),
+      'النوع':           state.naw,
+      'الصادر/الوارد':   state.sadarat,
+      'عنوان الملف':     getVal('file'),
+      'طريقة الإرسال':   state.tariqa,
+      'طبيعة المراسلة':  state.tabia,
+      'الرقم':           raqm,
+      'تاريخ الخروج':    getVal('date_out'),
+      'تاريخ الدخول':    getVal('date_in'),
+      'الموضوع':         subject,
+      'تاريخ الإضافة':   new Date().toLocaleDateString('ar-MA')
+    });
+    save(); renderRecords(); updateStats(); showToast('✅ تمت إضافة المراسلة بنجاح!','success'); resetForm();
+  }
+
+  function renderRecords() {
+    const wrap  = document.getElementById('records-wrap');
+    const query = document.getElementById('searchInput')?.value?.trim().toLowerCase() || '';
+    const list  = query
+      ? records.filter(r => (r['الموضوع']||'').toLowerCase().includes(query) || (r['الرقم']||'').toLowerCase().includes(query))
+      : records;
+
+    document.getElementById('hdr-count').textContent = records.length;
+
+    if (!list.length) {
+      wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">${query?'🔍':'📭'}</div><div class="empty-text">${query?'لا توجد نتائج مطابقة':'لا توجد مراسلات بعد'}</div><div class="empty-sub">${query?'جرب كلمة بحث أخرى':'أضف مراسلة أولى باستخدام النموذج أعلاه'}</div></div>`;
+      return;
+    }
+
+    wrap.innerHTML = list.map((r, i) => {
+      const pills = [];
+      if (r['الرقم'])            pills.push(`<span class="pill pill-blue"># ${r['الرقم']}</span>`);
+      if (r['الصادر/الوارد']==='صادرات') pills.push(`<span class="pill pill-green">📤 صادرات</span>`);
+      else if(r['الصادر/الوارد']==='واردات') pills.push(`<span class="pill pill-amber">📥 واردات</span>`);
+      if (r['النوع'])            pills.push(`<span class="pill pill-blue">${r['النوع']}</span>`);
+      if (r['الجهة المرسلة'])   pills.push(`<span class="pill pill-gray">من: ${r['الجهة المرسلة']}</span>`);
+      if (r['الجهة المستقبلة'])pills.push(`<span class="pill pill-gray">إلى: ${r['الجهة المستقبلة']}</span>`);
+      if (r['عنوان الملف'])     pills.push(`<span class="pill pill-purple">📁 ${r['عنوان الملف']}</span>`);
+      if (r['طبيعة المراسلة']?.includes('مستعجل')) pills.push(`<span class="pill pill-red">⚡ ${r['طبيعة المراسلة']}</span>`);
+      else if(r['طبيعة المراسلة']?.includes('هام')) pills.push(`<span class="pill pill-amber">⚠️ ${r['طبيعة المراسلة']}</span>`);
+      if (r['تاريخ الخروج'])    pills.push(`<span class="pill pill-gray">📅 خروج: ${r['تاريخ الخروج']}</span>`);
+      if (r['تاريخ الدخول'])    pills.push(`<span class="pill pill-gray">📅 دخول: ${r['تاريخ الدخول']}</span>`);
+      if (r['تاريخ الإضافة'])   pills.push(`<span class="pill pill-gray">🕐 ${r['تاريخ الإضافة']}</span>`);
+
+      const cls = r['طبيعة المراسلة']?.includes('مستعجل') ? 'urgent'
+                : r['طبيعة المراسلة']?.includes('هام')    ? 'important' : '';
+
+      return `<div class="record-card ${cls}">
+        <div class="record-num">${list.length - i}</div>
+        <div class="record-body">
+          <div class="record-subject">${r['الموضوع']||'(بدون موضوع)'}</div>
+          <div class="record-meta">${pills.join('')}</div>
+        </div>
+        <div class="record-actions">
+          <button class="action-btn print" onclick="printRecord(${records.indexOf(r)})" title="طباعة">🖨️</button>
+          <button class="action-btn del"   onclick="deleteRecord(${records.indexOf(r)})" title="حذف">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function deleteRecord(i) {
+    if (!confirm('هل تريد حذف هذه المراسلة؟')) return;
+    records.splice(i, 1);
+    save(); renderRecords(); updateStats(); showToast('🗑️ تم حذف المراسلة','success');
+  }
+
+  function printRecord(i) {
+    const r = records[i];
+    const w = window.open('','_blank','width=700,height=600');
+    w.document.write(`<html dir="rtl"><head><meta charset="UTF-8">
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+      <style>body{font-family:Cairo,sans-serif;padding:40px;direction:rtl}h2{color:#1d4ed8;border-bottom:2px solid #eff6ff;padding-bottom:10px;margin-bottom:20px}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #e2e8f0;font-size:14px}td:first-child{font-weight:700;background:#f8fafc;width:160px}</style>
+    </head><body>
+      <h2>📋 مراسلة رسمية</h2>
+      <table>${Object.entries(r).filter(([k])=>k!=='id').map(([k,v])=>`<tr><td>${k}</td><td>${v||'—'}</td></tr>`).join('')}</table>
+      <script>window.print();window.close();<\/script>
+    </body></html>`);
+  }
+
+  function updateStats() {
+    document.getElementById('s-total').textContent = records.length;
+    document.getElementById('s-out').textContent   = records.filter(r=>r['الصادر/الوارد']==='صادرات').length;
+    document.getElementById('s-in').textContent    = records.filter(r=>r['الصادر/الوارد']==='واردات').length;
+    document.getElementById('s-urg').textContent   = records.filter(r=>r['طبيعة المراسلة']?.includes('مستعجل')).length;
+  }
+
+  function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast toast-${type} show`;
+    setTimeout(()=>t.className='toast',2800);
+  }
+
+  function resetForm() {
+    ['mustaqbila','mursila','file'].forEach(id=>{
+      document.getElementById(id).value='';
+      const o=document.getElementById(id+'_other');
+      if(o){o.value='';o.style.display='none';}
+    });
+    ['raqm','date_out','date_in'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('mawdou').value='';
+    Object.keys(state).forEach(k=>state[k]='');
+    document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active','active-green','active-amber','active-red'));
+  }
+
+  function exportCSV() {
+    if (!records.length) { showToast('⚠️ لا توجد مراسلات للتصدير','error'); return; }
+    const keys = Object.keys(records[0]).filter(k=>k!=='id');
+    const rows = [keys.join(','), ...records.map(r=>keys.map(c=>`"${(r[c]||'').replace(/"/g,'""')}"`).join(','))];
+    const blob = new Blob(['\uFEFF'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='مراسلات_منظومة_الاعلام.csv'; a.click();
+    showToast('✅ تم تصدير الملف بنجاح','success');
+  }
+
+  // تهيئة أولية
+  renderRecords();
+  updateStats();
+</script>
+</body>
+</html>
